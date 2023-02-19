@@ -42,8 +42,8 @@ def get_insta360_filenames(data: Path) -> Tuple[Path, Path]:
         raise ValueError("The input file must be an .insv file.")
     file_parts = data.stem.split("_")
 
-    stem_back = f"VID_{file_parts[1]}_{file_parts[2]}_00_{file_parts[4]}.insv"
-    stem_front = f"VID_{file_parts[1]}_{file_parts[2]}_10_{file_parts[4]}.insv"
+    stem_back = f"VID_{file_parts[1]}_{file_parts[2]}_10_{file_parts[4]}.insv"
+    stem_front = f"VID_{file_parts[1]}_{file_parts[2]}_00_{file_parts[4]}.insv"
 
     filename_back = data.parent / stem_back
     filename_front = data.parent / stem_front
@@ -98,8 +98,8 @@ def convert_insta360_to_images(
 
         vf_cmds.append(f"crop=iw*{crop_percentage}:ih*{crop_percentage}")
 
-        front_vf_cmds = vf_cmds + ["transpose=2"]
-        back_vf_cmds = vf_cmds + ["transpose=1"]
+        front_vf_cmds = vf_cmds + ["transpose=1", "transpose=1"]
+        back_vf_cmds = vf_cmds + ["transpose=1", "transpose=1"]
 
         front_ffmpeg_cmd = f"ffmpeg -i {video_front} -vf {','.join(front_vf_cmds)} -r 1 {image_dir / 'frame_%05d.png'}"
         back_ffmpeg_cmd = (

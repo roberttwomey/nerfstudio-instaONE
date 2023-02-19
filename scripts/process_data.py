@@ -399,7 +399,8 @@ class ProcessInsta360:
 
         summary_log, num_extracted_frames = [], 0
 
-        if width / height == 1:
+        if width / height <= 1.03:
+            print("processing two videos")
             if not filename_front.exists():
                 raise FileNotFoundError(f"Could not find {filename_front}")
             # Convert video to images
